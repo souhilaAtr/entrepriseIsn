@@ -9,6 +9,16 @@ $password = @$_POST['password'];
 @$service = strip_tags($_POST['service']);
 @$salaire = strip_tags($_POST['salaire']);
 
+
+
+$statement = $pdo->prepare("SELECT * from employes where id_employes = :id");
+$statement->execute([
+    "id" => $_GET['id_employes']
+]);
+
+$employe = $statement->fetch();
+// var_dump($employe);
+
 if (isset($_POST['envoyer'])) {
     // nom
     if (empty($nom)) {
@@ -30,40 +40,9 @@ if (isset($_POST['envoyer'])) {
     // } elseif (!preg_match(" /^[^\W][a-zA-Z0-9]+(.[a-zA-Z0-9]+)@[a-zA-Z0-9]+(.[a-zA-Z0-9]+).[a-zA-Z]{2,4}$/ ", $email)) {
     //     $erreur .= "<li>l'email est invalide</li>";
     // }
-    if (empty($password)) {
-        $erreur .= "<li>Veuillez entrer un mot de passe valide</li>";
-    }
+
     if (empty($service)) {
         $erreur .= "<li>Veuillez entrer un service</li>";
-    }
-
-    //insertion au niveau de la table employes 
-
-    if (empty($erreur)) {
-
-        try {
-        
-           
-              $statement = $pdo->prepare("INSERT INTO employes(nom,prenom,email,password,salaire,service)VALUES(:nm,:prenom,:email,:password,:salaire,:service)");
-              $statement->execute([
-                    "nm" => $nom,
-                    "prenom" => $prenom,
-                    "email" => $email,
-                    "password" => $password,
-                    "service" => $service,
-                    "salaire" => $salaire
-
-              ]);
-              header("location: employes.php");
-
-
-
-
-
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
     }
 }
 
@@ -76,31 +55,27 @@ if (isset($_POST['envoyer'])) {
 
     <div>
         <label class="form-label mt-4">Email</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="<?= $employe['email'] ?>">
     </div>
-    <div>
-        <label class="form-label mt-4">mot de passe</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" name="password">
 
-    </div>
 
     <div>
         <label class="form-label mt-4">nom</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" name="nom">
+        <input type="text" class="form-control" aria-describedby="emailHelp" name="nom" value="<?= $employe['nom'] ?>">
     </div>
 
     <div>
         <label class="form-label mt-4">prenom</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" name="prenom">
+        <input type="text" class="form-control" aria-describedby="emailHelp" name="prenom" value="<?= $employe['prenom'] ?>">
     </div>
 
     <div>
         <label class="form-label mt-4">service</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" name="service">
+        <input type="text" class="form-control" aria-describedby="emailHelp" name="service" value="<?= $employe['service'] ?>">
     </div>
     <div>
         <label class="form-label mt-4">salaire</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" name="salaire">
+        <input type="text" class="form-control" aria-describedby="emailHelp" name="salaire" value="<?= $employe['salaire'] ?>">
     </div>
     <button type="submit" class="btn btn-outline-success" name="envoyer">Ajouter Employer</button>
 

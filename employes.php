@@ -25,17 +25,18 @@ try {
             </tr>
         </thead>
         <tbody>
-      <?php    foreach($employes as $employe){ ?>
-            <tr class="table-secondary">                
-                <td><?=  $employe['id_employes'] ?></td>
-                <td><?=  $employe['nom'] ?></td>
-                <td><?=  $employe['prenom'] ?></td>
-                <td><?=  $employe['email'] ?></td>
-                <td><?=  $employe['service'] ?></td>
-                <td><?=  $employe['salaire'] ?></td>
-                
-            </tr>
-                <?php  } ?> 
+            <?php foreach ($employes as $employe) { ?>
+                <tr class="table-secondary">
+                    <td><?= $employe['id_employes'] ?></td>
+                    <td><?= $employe['nom'] ?></td>
+                    <td><?= $employe['prenom'] ?></td>
+                    <td><?= $employe['email'] ?></td>
+                    <td><?= $employe['service'] ?></td>
+                    <td><?= $employe['salaire'] ?></td>
+                    <td><a href="modifier.php?id_employes=<?= $employe['id_employes'] ?>">modifier info</a></td>
+
+                </tr>
+            <?php  } ?>
         </tbody>
     </table>
 
