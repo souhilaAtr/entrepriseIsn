@@ -32,6 +32,8 @@ if (isset($_POST['envoyer'])) {
     // }
     if (empty($password)) {
         $erreur .= "<li>Veuillez entrer un mot de passe valide</li>";
+    } else {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
     }
     if (empty($service)) {
         $erreur .= "<li>Veuillez entrer un service</li>";
@@ -42,25 +44,19 @@ if (isset($_POST['envoyer'])) {
     if (empty($erreur)) {
 
         try {
-        
-           
-              $statement = $pdo->prepare("INSERT INTO employes(nom,prenom,email,password,salaire,service)VALUES(:nm,:prenom,:email,:password,:salaire,:service)");
-              $statement->execute([
-                    "nm" => $nom,
-                    "prenom" => $prenom,
-                    "email" => $email,
-                    "password" => $password,
-                    "service" => $service,
-                    "salaire" => $salaire
-
-              ]);
-              header("location: employes.php");
 
 
+            $statement = $pdo->prepare("INSERT INTO employes(nom,prenom,email,password,salaire,service)VALUES(:nm,:prenom,:email,:password,:salaire,:service)");
+            $statement->execute([
+                "nm" => $nom,
+                "prenom" => $prenom,
+                "email" => $email,
+                "password" => $hash,
+                "service" => $service,
+                "salaire" => $salaire
 
-
-
-
+            ]);
+            header("location: employes.php");
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

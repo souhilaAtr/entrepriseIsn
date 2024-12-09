@@ -1,3 +1,11 @@
+<?php session_start();
+
+if (!empty($_GET['flag'])) {
+    session_unset();
+    unset($_SESSION);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,10 +37,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="employes.php">liste employes</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">inscription/connexion</a>
-                    </li>
-
+                    <?php if (!empty($_SESSION["id"])) {
+                    ?>
+                        <a class="nav-link" href="header.php?flag=true">Deconnexion</a>
+                    <?php
+                    } else { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="connexion.php">inscription/connexion</a>
+                        </li>
+                    <?php
+                    } ?>
                 </ul>
 
             </div>

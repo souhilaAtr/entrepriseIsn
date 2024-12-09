@@ -34,7 +34,7 @@ try {
                     <td><?= $employe['service'] ?></td>
                     <td><?= $employe['salaire'] ?></td>
                     <td><a href="modifier.php?id_employes=<?= $employe['id_employes'] ?>">modifier info</a></td>
-
+                    <td><a href="supprimer.php?id_employes=<?= $employe['id_employes']?>">suppression</a></td>
                 </tr>
             <?php  } ?>
         </tbody>

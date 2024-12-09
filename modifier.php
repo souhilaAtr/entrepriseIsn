@@ -44,6 +44,19 @@ if (isset($_POST['envoyer'])) {
     if (empty($service)) {
         $erreur .= "<li>Veuillez entrer un service</li>";
     }
+    if (empty($erreur)) {
+        $sql = "UPDATE employes SET nom = :nom, prenom =:prenom, email = :email, service=:service,salaire=:salaire WHERE id_employes = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->execute([
+            "nom" => $_POST['nom'],
+            "prenom" => $_POST['prenom'],
+            "email" => $_POST['email'],
+            "service" => $_POST['service'],
+            "salaire" => $_POST['salaire'],
+            "id" => $_GET['id_employes']
+        ]);
+        header('location: employes.php');
+    }
 }
 
 
